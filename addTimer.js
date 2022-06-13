@@ -23,7 +23,9 @@ const splitHourMinute = (time)=>{
     return ([parseInt(structureTime(time).split(":")[0]),parseInt(structureTime(time).split(":")[1])])
 }
 
-
+function removeWhiteSpace (time){
+    return time.replace(/ /g,'')
+}
 const addDuration = (time, duration) => {
     let time_of_day;
     if (checkIfMorning(time)){
@@ -36,19 +38,19 @@ const addDuration = (time, duration) => {
     if (total_minutes >= 60){
         let minutes = total_minutes % 60
         const hour = hour_ + 1
-        if (hour === 12 && time_of_day==="PM") return "00:" + minutes.toString() +"AM"
-        if (hour === 12 && time_of_day==="AM") return "00:" + minutes.toString() +"PM" 
-        if (hour > 12 && hour < 24)  return (hour%12).toString() + minutes.toString() +"PM"
-        if (hour ===  24) return [00, minutes, "AM"]
-        if (hour > 24) return [hour % 23, minutes, "AM"]
-        if (hour > 0) return [hour, minutes, time_of_day]
+        if (hour === 12 && time_of_day==="PM") return "00:" + minutes.toString() +" AM"
+        if (hour === 12 && time_of_day==="AM") return "00:" + minutes.toString() +" PM" 
+        if (hour > 12 && hour < 24)  return (hour%12).toString() + ":" + minutes.toString() +" PM"
+        if (hour ===  24) return "00:" + minutes.toString() +" AM"
+        if (hour > 24) return (hour%24).toString() + ":" + minutes.toString() +" AM"
+        if (hour > 0) return hour.toString() + ":" + minutes.toString() + " " + time_of_day
     }
-    else return [hour_, total_minutes, time_of_day]
+    else return hour_.toString() + total_minutes.toString() + " " + time_of_day
 }       
 
-let start_time = "11:39PM";
-let duration = "50mins"
+let start_time = "11:30 PM";
+let duration = "78mins"
 
-console.log(addDuration(start_time,duration ))
+console.log(addDuration(removeWhiteSpace(start_time),removeWhiteSpace(duration) ))
 
 
