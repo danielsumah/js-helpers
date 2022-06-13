@@ -26,14 +26,14 @@ const splitHourMinute = (time)=>{
 function removeWhiteSpace (time){
     return time.replace(/ /g,'')
 }
-const addDuration = (time, duration) => {
+const addDuration = (start_time, duration) => {
     let time_of_day;
-    if (checkIfMorning(time)){
+    if (checkIfMorning(removeWhiteSpace(start_time))){
         time_of_day = "AM"
     } else time_of_day = "PM"
-    let hour_ = splitHourMinute(time)[0]
-    let min_ = splitHourMinute(time)[1]
-    let duration_ = removeMin(duration)
+    let hour_ = splitHourMinute(removeWhiteSpace(start_time))[0]
+    let min_ = splitHourMinute(removeWhiteSpace(start_time))[1]
+    let duration_ = removeMin(removeWhiteSpace(duration))
     const total_minutes = min_ + parseInt(duration_)
     if (total_minutes >= 60){
         let minutes = total_minutes % 60
@@ -48,9 +48,6 @@ const addDuration = (time, duration) => {
     else return hour_.toString() + total_minutes.toString() + " " + time_of_day
 }       
 
-let start_time = "11:30 PM";
-let duration = "78mins"
-
-console.log(addDuration(removeWhiteSpace(start_time),removeWhiteSpace(duration) ))
+module.exports = addDuration;
 
 
